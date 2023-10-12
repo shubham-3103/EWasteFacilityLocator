@@ -1,7 +1,6 @@
 // src/components/About.js
 import React from 'react';
 import '../App.css'; // Import CSS file for styling
-
 function About() {
   return (
     <div className="about-container">
