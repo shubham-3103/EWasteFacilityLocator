@@ -5,8 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const { user } = useUser();
-
   const navigate = useNavigate();
+  const scrollToAbout = () => {
+    const aboutSection = document.getElementById('about-section');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -21,7 +26,7 @@ function Navbar() {
                 <a className="nav-link active" aria-current="page" href="/protected">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/About">About E-Waste</a>
+              <a href="#about-section" className="nav-link" onClick={scrollToAbout}>About E-Waste</a>
               </li> 
               <li className="nav-item">
                 <a className="nav-link" href="/facility">Find Facility</a>

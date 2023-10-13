@@ -17,7 +17,7 @@ function HomePage() {
 const [locations, setLocations] = useState([]);
   useEffect(() => {
     axios
-      .get('http://localhost:5000/location')
+      .get('/location')
       .then((res) => {
         setLocations(res.data);
       })
@@ -31,11 +31,19 @@ const [locations, setLocations] = useState([]);
     var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      
+      center: [20.5937, 78.9629],
+      zoom: 2
     });
-  }, []);
 
+    // Add markers to the map
+  locations.forEach((item) => {
+    const marker = new mapboxgl.Marker() // Ensure that this creates a marker
+      .setLngLat([item.longitude, item.latitude]) // Check if longitude and latitude are used correctly
+      .addTo(map); // Verify that the marker is added to the map
+  });
+}, [locations]);
 
+  console.log(locations);
   return (
     <>
     <div>

@@ -5,12 +5,8 @@ const cors = require('cors')
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
-const LocationRoute = require('./routes/LocationRoute');
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   methods:['GET','PUT','POST','DELETE'],
-//   allowedHeaders:['Content-Type'],
-// }));
+// const LocationRoute = require('./routes/LocationRoute');
+
 app.use(cors());
 app.use(express.json());
 
@@ -29,9 +25,6 @@ db.on('error', (err) => {
 db.once('open', () => {
   console.log('Connected to MongoDB');
 });
-
-//Location
-app.use('/location',LocationRoute);
 
 
 app.listen(port, () => {
