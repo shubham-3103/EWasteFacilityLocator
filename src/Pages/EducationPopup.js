@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import '../App.css'
+import '../App.css';
+
 const EducationPopup = () => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -11,10 +12,13 @@ const EducationPopup = () => {
     isOpen && (
       <div className="popup-overlay">
         <div className="popup-content">
-          <p>It's essential to recycle your e-waste through authorized facilities.<br /> 
-            Many electronics retailers and recycling centers accept old devices for proper recycling.<br />  
-            By doing so, you contribute to reducing pollution, conserving resources, and protecting the environment.</p>
-          <button onClick={handleClose}>Close</button>
+          <div className="popup-content-inner">
+            <img src="/Images/popupmock.webp" alt="Garbage Truck" />
+            <p>
+              It's essential to recycle your e-waste through authorized facilities. Many electronics retailers and recycling centers accept old devices for proper recycling. By doing so, you contribute to reducing pollution, conserving resources, and protecting the environment.
+            </p>
+          </div>
+          <button onClick={handleClose}>X</button>
         </div>
       </div>
     )

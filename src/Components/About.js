@@ -7,10 +7,7 @@ function About() {
       <div className="about-description">
         <h2>About Us</h2>
         <p>
-          Website that tells you the location of the nearest e-waste collection and recycling facility.
-          Offers educational pop-ups on the harmful components of your e-waste and their effects on the environment
-          and human health if not disposed correctly. There could be an option to input the model of your old device
-          and earn credit points relative to the amount of precious metals recovered from the device if disposed correctly.
+          In an effort to combat the growing issue of electronic waste (e-waste), our project is dedicated to responsible recycling and disposal. We provide convenient drop-off locations for old electronics, ensuring they are recycled or refurbished, reducing environmental impact and promoting a sustainable future.
         </p>
       </div>
       <div className="about-image">
