@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  /* padding: 20px; */
+  scale: 1.03;
 }
 
 .about-description {
@@ -42,6 +43,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  font-family: 'Lato', sans-serif;
 }
 
 .popup-content {
@@ -61,9 +63,8 @@
 
 .popup-content p {
   margin-top: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  font-style: italic;
+  font-size: 16px;
+  text-align: justify;
 }
 
 .popup-content button {
@@ -100,4 +101,63 @@
 }
 .card-header{
   font-family: 'Montserrat', sans-serif;
+}
+.card-body{
+  font-family: 'Lato', sans-serif;
+}
+.poster{
+  position: absolute;
+  z-index: 100;
+  scale: 0.5;
+  right: 0%;
+  top: 0%;
+}
+/* CSS */
+.button-27 {
+  appearance: none;
+  background-color: #cd8a2d;
+  border: 2px solid #000000;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 40px;
+  min-width: 0;
+  outline: none;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+  position: relative;
+  bottom: 5%;
+}
+.button-27:disabled {
+  pointer-events: none;
+}
+.button-27:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+.button-27:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+.Stepline{
+  position: absolute;
+  top: 63%;
+  z-index: -1;
+}
+a{
+  text-decoration: none;
+  font-weight: 500;
 }

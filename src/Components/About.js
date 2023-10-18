@@ -3,7 +3,7 @@ import React from 'react';
 import '../App.css'; // Import CSS file for styling
 function About() {
   return (
-    <div className="about-container" id="about-section">
+    <div className="about-container container my-5" id="about-section">
       <div className="about-description">
         <h2>About Us</h2>
         <p>

@@ -23,13 +23,13 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/protected">Home</a>
+                <a className="nav-link active" aria-current="page" href="/">Home</a>
               </li>
               <li className="nav-item">
-              <a href="#about-section" className="nav-link" onClick={scrollToAbout}>About E-Waste</a>
+              <a href="#about-section" className="nav-link" onClick={scrollToAbout}>About Us</a>
               </li> 
               <li className="nav-item">
-                <a className="nav-link" href="/facility">Find Facility</a>
+                <a className="nav-link" href="/findfacility">Find Facility</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/reward">Earn Rewards</a>
