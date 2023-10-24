@@ -2,6 +2,8 @@ import React from 'react';
 import { UserButton } from "@clerk/clerk-react";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/Logo.png'
+import '../App.css';
 
 function Navbar() {
   const { user } = useUser();
@@ -12,11 +14,15 @@ function Navbar() {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  const userNameContent = user?.fullName;
   return (
+    <>
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/protected">E-Waste Locator</a>
+          <a className="navbar-brand" href="/">
+            <img src={logo} width='50px' height='40px' className='navbarLogo' />
+          </a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -32,21 +38,25 @@ function Navbar() {
                 <a className="nav-link" href="/findfacility">Find Facility</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/reward">Earn Rewards</a>
+                <a className="nav-link" href="/credits">Rewards</a>
               </li>
             </ul>
           </div>
+          <div className='userName'>{
+            userNameContent
+          }</div>
           {!user ? (
-  <div className="nav-item">
-    <button
-      // className="nav-link btn btn-primary"
-      onClick={() => navigate('/sign-in')} className="h-4 w-4 text-black ml-2" size="sm" variant="premium" > Sign In
-          </button>
-        </div>
-      ) : <UserButton />}
-        </div>
-      </nav>
-    </div>
+            <div className="nav-item">
+              <button
+                // className="nav-link btn btn-primary"
+                onClick={() => navigate('/sign-in')} className="h-4 w-4 text-black ml-2" size="sm" variant="premium" > Sign In
+                    </button>
+                  </div>
+                ) :<UserButton />}
+          </div>
+        </nav>
+      </div>
+      </>
   )
 }
 

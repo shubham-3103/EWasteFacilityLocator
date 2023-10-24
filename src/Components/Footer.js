@@ -44,7 +44,7 @@ function Footer() {
                   <a href="/findfacility" style={linkStyle}>Facilities</a>
                 </li>
                 <li className="mb-1">
-                  <a href="/reward" style={linkStyle}>Rewards</a>
+                  <a href="/credits" style={linkStyle}>Rewards</a>
                 </li>
               </ul>
             </div>

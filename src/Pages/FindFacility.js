@@ -22,8 +22,9 @@ function FindFacility() {
     var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [20.5937, 78.9629],
-      zoom: 2
+      center: [78.9629, 20.5937],
+      zoom: 3.8,
+      pitchWithRotate: false
     });
     locations.forEach((item) => {
       const marker = new mapboxgl.Marker() 

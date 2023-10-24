@@ -48,7 +48,7 @@ function Process() {
           </svg>
         {/* </div> */}
       </div>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center process-text">
         <p className="mt-5 w-50 text-center font-montserrat font-weight-bold">
           We're the link between e-waste recycling companies and eco-conscious consumers. Our platform connects clients with trusted recycling partners, streamlining the recycling process and offering rewards for sustainable choices.
         </p>

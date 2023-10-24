@@ -1,3 +1,6 @@
+.userName{
+  padding-right: 1%;
+}
 .about-container {
   display: flex;
   align-items: center;
@@ -89,6 +92,7 @@
   transform: translateX(-50%);
   filter: blur(2px);
 }
+/* MapImage */
 .card{
   position: absolute;
   padding: 2px;
@@ -156,8 +160,70 @@
   position: absolute;
   top: 63%;
   z-index: -1;
+  /* transform-origin: center; */
 }
 a{
   text-decoration: none;
   font-weight: 500;
 }
+.garbagetruck {
+  position: fixed;
+  bottom: -56%;
+  height: 500px;
+  left: 0%;
+  opacity: 1; /* Use 1 for full opacity */
+  z-index: 100;
+}
+
+@media (max-width: 480px) {
+  .card{
+    width: 65%;
+    height: 45%;
+    left: 15%;
+    top: 35%;
+    transform: translateX(-10%);
+  }
+  .card-body{
+    font-size: 14px;
+    text-align: justify;
+  }
+  .poster{
+    width: 80%;
+    top: 48%;
+    left: 39%;
+  }
+  .about-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .about-description {
+    padding: 10px;
+  }
+
+  .about-description h2 {
+    font-size: 20px;
+  }
+
+  .about-image {
+    padding: 10px;
+  }
+  .Stepline{
+    transform: rotate(90deg);
+    top: 45%;
+    width: 600px;
+  }
+  .process-text{
+    font-size: 14px;
+  }
+}
+.credititem{
+  display: flex;
+  flex-direction: column;
+  justify-content:  space-between;
+  padding-top: 2%;
+  /* padding-: 2%; */
+  /* max-width: 100%; */
+  /* align-items: center; */
+}
+
