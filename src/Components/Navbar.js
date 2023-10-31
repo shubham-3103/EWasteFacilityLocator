@@ -1,9 +1,10 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import { UserButton } from "@clerk/clerk-react";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/Logo.png'
 import '../App.css';
+import axios from 'axios';
 
 function Navbar() {
   const { user } = useUser();
@@ -15,7 +16,29 @@ function Navbar() {
     }
   };
   const userNameContent = user?.fullName;
-  return (
+  
+
+  
+//   const [userPoints, setUserPoints] = useState(null);
+  
+//   useEffect(() => {
+//     if (user) {
+//     axios
+//       .get('http://localhost:5000/', {
+//         params: {
+//           email: user.email, // Pass the user's email to the API request
+//         },
+//       })
+//       .then((response) => {
+//         setUserPoints(response.data.points);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   }
+// }, [user]);
+
+return (
     <>
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -41,6 +64,13 @@ function Navbar() {
                 <a className="nav-link" href="/credits">Rewards</a>
               </li>
             </ul>
+          </div>
+          <div>
+          {/* {userPoints !== null ? (
+            <p>User Points: {userPoints}</p>
+          ) : (
+            <p>Loading...</p>
+          )} */}
           </div>
           <div className='userName'>{
             userNameContent

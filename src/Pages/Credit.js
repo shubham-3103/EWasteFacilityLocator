@@ -1,9 +1,10 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Navbar'
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import '../App.css'
+import axios from 'axios';
 
 import img1 from "../assets/rewards/1.jpg";
 import img2 from "../assets/rewards/2.jpg";
@@ -24,6 +25,28 @@ function Credit() {
   const [weight, setWeight] = useState(0);
   const [points, setPoints] = useState(0);
   
+  useEffect(() => {
+    if (user) {
+      const clerkEmailId = user?.primaryEmailAddress.emailAddress;
+      const addEmailToDatabase = async (email) => {
+        try {
+          const response = await axios.post('http://localhost:5000/addEmail', { email });
+
+          if (response.status === 201) {
+            console.log('Email added to the database.');
+          } else if (response.status === 200) {
+            console.log('Email already exists in the database.');
+          }
+        } catch (error) {
+          console.error('Error adding email to the database:', error);
+        }
+      };
+
+      addEmailToDatabase(clerkEmailId);
+      console.log(user.primaryEmailAddress.id);
+    }
+  }, [user]);
+
   const calculatePoints = () => {
     if (size === "Small Electronics") {
       setPoints(1 * weight);

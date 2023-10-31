@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Location = require('../Models/Location')
 
-
 router.post('/', async function(req,res){
     try {
       if(
@@ -36,6 +35,7 @@ router.get('/', async function(req,res){
         res.status(500).send({message: error.message})
     }
 })
+
   //fetch location by id
 router.get('/:id', async function(req,res){
     try {
