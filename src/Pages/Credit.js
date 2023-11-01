@@ -5,6 +5,7 @@ import Navbar from '../Components/Navbar'
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import '../App.css'
 import axios from 'axios';
+import OtpInput from 'react-otp-input';
 
 import img1 from "../assets/rewards/1.jpg";
 import img2 from "../assets/rewards/2.jpg";
@@ -15,15 +16,24 @@ import img6 from "../assets/rewards/6.jpg";
 import img7 from "../assets/rewards/7.jpg";
 import img8 from "../assets/rewards/8.jpg";
 import Footer from '../Components/Footer';
+import RedeemPopup from './RedeemPopup';
+import CreditPopup from './CreditPopup';
 
 function Credit() {
+  const [otp, setOtp] = useState('');
   const { user } = useUser();
   const navigate = useNavigate();
-  // Check if the user is signed in
+
   const [size, setSize] = useState("Small Electronics");
   const [item, setItem] = useState("Smartphone");
+
   const [weight, setWeight] = useState(0);
   const [points, setPoints] = useState(0);
+
+  const [redeemSuccess, setRedeemSuccess] = useState(false);
+  const [creditSuccess, setCreditSuccess] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [creditOpen, creditIsOpen] = useState(false);
   
   useEffect(() => {
     if (user) {
@@ -43,7 +53,7 @@ function Credit() {
       };
 
       addEmailToDatabase(clerkEmailId);
-      console.log(user.primaryEmailAddress.id);
+    //   console.log(user.primaryEmailAddress.id);
     }
   }, [user]);
 
@@ -56,6 +66,59 @@ function Credit() {
       setPoints(3 * weight);
     }
   }
+
+  const handleSubmit = async () => {
+    try {
+      if (user) {
+        const email = user?.primaryEmailAddress.emailAddress;
+        // Send the email and points to your backend
+        const response = await axios.post('http://localhost:5000/addEmail/updatePoints', { email, points });
+
+        if (response.status === 200) {
+          // Handle the successful response, e.g., show a success message
+          console.log('Points updated successfully');
+          setCreditSuccess(true);
+  
+            setTimeout(() => {
+              setCreditSuccess(false);
+              creditIsOpen(true);
+              console.log("Credit testing")
+            },0); // Auto-hide the success message after 3 seconds
+        }
+      }
+    } catch (error) {
+      // Handle any errors, e.g., show an error message
+      console.error('Error updating points:', error);
+    }
+  }
+  const handleRedeem = (redeemPoints) => {
+    try {
+      if (user) {
+        const email = user?.primaryEmailAddress.emailAddress;
+        // Send the email and points to your backend
+        axios.post('http://localhost:5000/addEmail/reducePoints', { email, points: redeemPoints })
+          .then(response => {
+            // Handle the successful response
+            console.log('Points updated successfully', response);
+  
+            setRedeemSuccess(true);
+  
+            setTimeout(() => {
+              setRedeemSuccess(false);
+              setIsOpen(true);
+              console.log("timeout testing")
+            },0); // Auto-hide the success message after 3 seconds
+          })
+          .catch(error => {
+            // Handle any errors
+            console.error('Error updating points:', error);
+          });
+      }
+    } catch (error) {
+      console.error('Error in handleRedeem:', error);
+    }
+  };
+
   if (!user) {
     navigate('/sign-in');
     return null;
@@ -64,6 +127,9 @@ function Credit() {
   return (
     <div>
       <Navbar />
+      
+      {isOpen && <RedeemPopup />}
+      {creditOpen && <CreditPopup />}
       <section className="text-gray-600 body-font relative">
                 <Container>
                     <Row className="text-center mb-4">
@@ -129,7 +195,7 @@ function Credit() {
                         <Col md={6}>
                             <div className="text-center">
                                 <div className="rounded-lg border border-gray-100 px-4 py-4 text-center">
-                                    <p className="text-lg font-medium text-gray-500">Total Points</p>
+                                    <p className="text-lg font-medium text-gray-500">Points</p>
                                     <h3 className="text-4xl font-extrabold text-green-600 md:text-5xl">{points}</h3>
                                 </div>
                             </div>
@@ -137,12 +203,19 @@ function Credit() {
                       {/* <div className="d-flex flex-wrap"> */}
                         <div className="mb-3">
                           <label htmlFor="name" className="form-label">Enter Coupon Code to verify.</label>
-                          <input type="text" placeholder="xxx-xxx" id="name" name="name" className="form-control" />
+                          <input type="text" placeholder="xx-xx" id="name" name="name" className="form-control" />
                         </div>
                         <div className="mt-3">
-                          <button className="button-27">Submit</button>
+                            <button className="button-27" onClick={handleSubmit}>Submit</button>
                         </div>
                       {/* </div> */}
+                      {/* <OtpInput
+                        value={otp}
+                        onChange={setOtp}
+                        numInputs={4}
+                        renderSeparator={<span>-</span>}
+                        renderInput={(props) => <input {...props} />}
+                        /> */}
                     </div>
                         </Col>
                     </Row>
@@ -161,7 +234,7 @@ function Credit() {
                                       <h2 className="text-gray-900 title-font text-lg font-medium">Certificate</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">1 Point</h3>
                                   </div>
-                                  <Button variant="success" className="mt-2 flex justify-center">Redeem</Button>
+                                  <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(1)}>Redeem</Button>
                               </div>
                           </Col>
                           <Col className='credititem'>
@@ -173,7 +246,7 @@ function Credit() {
                                       <h2 className="text-gray-900 title-font text-lg font-medium">T-Shirt</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">3 Point</h3>
                                   </div>
-                                  <Button variant="success" className="mt-2 flex justify-center">Redeem</Button>
+                                  <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(3)}>Redeem</Button>
                               </div>
                           </Col>
                           <Col className='credititem'>
@@ -185,7 +258,7 @@ function Credit() {
                                       <h2 className="text-gray-900 title-font text-lg font-medium">T-Shirt</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">3 Point</h3>
                                   </div>
-                                  <Button variant="success" className="mt-2 flex justify-center">Redeem</Button>
+                                  <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(3)}>Redeem</Button>
                               </div>
                           </Col>
                           <Col className='credititem'>
@@ -197,7 +270,7 @@ function Credit() {
                                       <h2 className="text-gray-900 title-font text-lg font-medium">Poster</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">4 Point</h3>
                                   </div>
-                                  <Button variant="success" className="mt-2 flex justify-center">Redeem</Button>
+                                  <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(4)}>Redeem</Button>
                               </div>
                           </Col>
                           <Col className='credititem'>
@@ -209,7 +282,7 @@ function Credit() {
                                       <h2 className="text-gray-900 title-font text-lg font-medium">Metal Badge</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">5 Point</h3>
                                   </div>
-                                  <Button variant="success" className="mt-2 flex justify-center">Redeem</Button>
+                                  <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(3)}>Redeem</Button>
                               </div>
                           </Col>
                           <Col className='credititem'>
@@ -221,7 +294,7 @@ function Credit() {
                                       <h2 className="text-gray-900 title-font text-lg font-medium">Diary</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">6 Point</h3>
                                   </div>
-                                  <Button variant="success" className="mt-2 flex justify-center">Redeem</Button>
+                                  <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(6)}>Redeem</Button>
                               </div>
                           </Col>
                           <Col className='credititem'>
@@ -233,7 +306,7 @@ function Credit() {
                                       <h2 className="text-gray-900 title-font text-lg font-medium">Cap</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">6 Point</h3>
                                   </div>
-                                  <Button variant="success" className="mt-2 flex justify-center">Redeem</Button>
+                                  <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(6)}>Redeem</Button>
                               </div>
                           </Col>
                           <Col className='credititem'>
@@ -245,7 +318,7 @@ function Credit() {
                                       <h2 className="text-gray-900 title-font text-lg font-medium">Bottle</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">7 Point</h3>
                                   </div>
-                                  <Button variant="success" className="mt-2 flex justify-center">Redeem</Button>
+                                  <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(7)}>Redeem</Button>
                               </div>
                           </Col>
                     </Row>

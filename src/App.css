@@ -226,4 +226,14 @@ a{
   /* max-width: 100%; */
   /* align-items: center; */
 }
-
+.popup{
+  width: 20%;
+  height: auto;
+  position: absolute;
+  left: 40%;
+  bottom: 80%;
+}
+.popuptext{
+  display: flex;
+  justify-content: center;
+}

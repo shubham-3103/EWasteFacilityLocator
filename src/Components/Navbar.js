@@ -19,24 +19,25 @@ function Navbar() {
   
 
   
-//   const [userPoints, setUserPoints] = useState(null);
+  const [userPoints, setUserPoints] = useState(null);
   
-//   useEffect(() => {
-//     if (user) {
-//     axios
-//       .get('http://localhost:5000/', {
-//         params: {
-//           email: user.email, // Pass the user's email to the API request
-//         },
-//       })
-//       .then((response) => {
-//         setUserPoints(response.data.points);
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   }
-// }, [user]);
+  useEffect(() => {
+    const email = user?.primaryEmailAddress.emailAddress;
+    if (user) {
+    axios
+      .get(`http://localhost:5000/addEmail/${email}`, {
+        params: {
+          email: user.email, // Pass the user's email to the API request
+        },
+      })
+      .then((response) => {
+        setUserPoints(response.data.points);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+}, [user]);
 
 return (
     <>
@@ -65,12 +66,10 @@ return (
               </li>
             </ul>
           </div>
-          <div>
-          {/* {userPoints !== null ? (
-            <p>User Points: {userPoints}</p>
-          ) : (
-            <p>Loading...</p>
-          )} */}
+          <div className='userName'>
+          {userPoints !== null ? (
+            <div>Total Points:  <b>{userPoints}</b></div>
+          ) : (<p></p>)}
           </div>
           <div className='userName'>{
             userNameContent
