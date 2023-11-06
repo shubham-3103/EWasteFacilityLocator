@@ -5,7 +5,6 @@ import Navbar from '../Components/Navbar'
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import '../App.css'
 import axios from 'axios';
-import OtpInput from 'react-otp-input';
 
 import img1 from "../assets/rewards/1.jpg";
 import img2 from "../assets/rewards/2.jpg";
@@ -26,14 +25,16 @@ function Credit() {
 
   const [size, setSize] = useState("Small Electronics");
   const [item, setItem] = useState("Smartphone");
+  const [itemCount,setItemCount] = useState(0)
 
-  const [weight, setWeight] = useState(0);
+  const [count, setWeight] = useState(0);
   const [points, setPoints] = useState(0);
 
   const [redeemSuccess, setRedeemSuccess] = useState(false);
   const [creditSuccess, setCreditSuccess] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [creditOpen, creditIsOpen] = useState(false);
+  const isSubmitted = useState(false);
   
   useEffect(() => {
     if (user) {
@@ -59,36 +60,52 @@ function Credit() {
 
   const calculatePoints = () => {
     if (size === "Small Electronics") {
-      setPoints(1 * weight);
+      setPoints(1 * count);
+      setWeight(count);
     } else if (size === "Medium Electronics") {
-      setPoints(2 * weight);
+      setPoints(2 * count);
+      setWeight(count);
     } else if (size === "Large Electronics") {
-      setPoints(3 * weight);
+      setPoints(3 * count);
+      setWeight(count);
     }
   }
 
   const handleSubmit = async () => {
     try {
       if (user) {
-        const email = user?.primaryEmailAddress.emailAddress;
-        // Send the email and points to your backend
-        const response = await axios.post('http://localhost:5000/addEmail/updatePoints', { email, points });
+        // const email = user?.primaryEmailAddress.emailAddress;
+        // // Send the email and points to your backend
+        // const response = await axios.post('http://localhost:5000/addEmail/updatePoints', { email, points });
 
+        // if (response.status === 200) {
+        //   // Handle the successful response, e.g., show a success message
+        //   console.log('Points updated successfully');
+        //   setCreditSuccess(true);
+  
+        //     setTimeout(() => {
+        //       setCreditSuccess(false);
+        //       creditIsOpen(true);
+        //       console.log("Credit testing")
+        //     },0); // Auto-hide the success message after 3 seconds
+        // }
+        const email = user?.primaryEmailAddress.emailAddress;
+        
+        const response = await axios.post('http://localhost:5000/addEmail/authenticate', { email, item, isSubmitted, points, count });
         if (response.status === 200) {
-          // Handle the successful response, e.g., show a success message
-          console.log('Points updated successfully');
-          setCreditSuccess(true);
+            console.log('Data goes to Facility from frontend');
+            setCreditSuccess(true);
   
             setTimeout(() => {
               setCreditSuccess(false);
               creditIsOpen(true);
               console.log("Credit testing")
             },0); // Auto-hide the success message after 3 seconds
-        }
+          } 
       }
     } catch (error) {
       // Handle any errors, e.g., show an error message
-      console.error('Error updating points:', error);
+      console.error('Error in Data going:', error);
     }
   }
   const handleRedeem = (redeemPoints) => {
@@ -162,32 +179,32 @@ function Credit() {
                                   <option value="Charger">Charger</option>
                                   <option value="Cables">Cables</option>
                                   <option value="Earphones">Earphones</option>
-                                  <option value="Digital Camera">Digital Camera</option>
+                                  <option value="Digital Camera">Camera</option>
                                 </Form.Select>
                               )}
                               {size === "Medium Electronics" && (
                                 <Form.Select onChange={(e) => setItem(e.target.value)}>
-                                  <option value="Gaming Console">Gaming Console</option>
-                                  <option value="DVD Player">DVD Player</option>
+                                  <option value="Gaming Console">Console</option>
+                                  <option value="DVD Player">Player</option>
                                   <option value="Tablets">Tablets</option>
                                   <option value="Laptops">Laptops</option>
-                                  <option value="Desktop Computer">Desktop Computer</option>
+                                  <option value="Desktop Computer">Computer</option>
                                   <option value="Printer">Printer</option>
                                 </Form.Select>
                               )}
                               {size === "Large Electronics" && (
                                 <Form.Select onChange={(e) => setItem(e.target.value)}>
                                   <option value="Refrigerators">Refrigerators</option>
-                                  <option value="Washing Machine">Washing Machine</option>
+                                  <option value="Washing Machine">Machine</option>
                                   <option value="Dishwasher">Dishwasher</option>
                                   <option value="Microwave">Microwave</option>
-                                  <option value="Home Theatre">Home Theatre</option>
+                                  <option value="Home Theatre">Speakers</option>
                                 </Form.Select>
                               )}
                             </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Number of Items</Form.Label>
-                                    <Form.Control type="text" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                                    <Form.Control type="text" value={count} onChange={(e) => setWeight(e.target.value)} />
                                 </Form.Group>
                                 <Button /*variant="primary"*/ className='button-27' onClick={calculatePoints}>Calculate Points</Button>
                             </Form>
@@ -201,21 +218,13 @@ function Credit() {
                             </div>
                     <div className="d-flex justify-content-center align-items-center w-100">
                       {/* <div className="d-flex flex-wrap"> */}
-                        <div className="mb-3">
+                        {/* <div className="mb-3">
                           <label htmlFor="name" className="form-label">Enter Coupon Code to verify.</label>
                           <input type="text" placeholder="xx-xx" id="name" name="name" className="form-control" />
-                        </div>
+                        </div> */}
                         <div className="mt-3">
                             <button className="button-27" onClick={handleSubmit}>Submit</button>
                         </div>
-                      {/* </div> */}
-                      {/* <OtpInput
-                        value={otp}
-                        onChange={setOtp}
-                        numInputs={4}
-                        renderSeparator={<span>-</span>}
-                        renderInput={(props) => <input {...props} />}
-                        /> */}
                     </div>
                         </Col>
                     </Row>
