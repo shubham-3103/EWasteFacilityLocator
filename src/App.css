@@ -237,3 +237,39 @@ a{
   display: flex;
   justify-content: center;
 }
+.no-data-popup {
+  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  /* backdrop-filter: blur(10px); */
+  backdrop-filter: blur(10px); /* The blur amount can be adjusted */
+ 
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 1000; /* Ensure the pop-up is in front of the blurred background*/
+}
+
+.no-data-popup p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.no-data-popup button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.no-data-popup button:hover {
+  background-color: #0056b3;
+}

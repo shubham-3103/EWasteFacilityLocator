@@ -35,6 +35,15 @@ function Credit() {
   const [isOpen, setIsOpen] = useState(false);
   const [creditOpen, creditIsOpen] = useState(false);
   const isSubmitted = useState(false);
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+
+  const openPopUp = () => {
+    setIsPopUpOpen(true);
+  };
+
+  const closePopUp = () => {
+    setIsPopUpOpen(false);
+  };
   
   useEffect(() => {
     if (user) {
@@ -74,34 +83,22 @@ function Credit() {
   const handleSubmit = async () => {
     try {
       if (user) {
-        // const email = user?.primaryEmailAddress.emailAddress;
-        // // Send the email and points to your backend
-        // const response = await axios.post('http://localhost:5000/addEmail/updatePoints', { email, points });
-
-        // if (response.status === 200) {
-        //   // Handle the successful response, e.g., show a success message
-        //   console.log('Points updated successfully');
-        //   setCreditSuccess(true);
-  
-        //     setTimeout(() => {
-        //       setCreditSuccess(false);
-        //       creditIsOpen(true);
-        //       console.log("Credit testing")
-        //     },0); // Auto-hide the success message after 3 seconds
-        // }
         const email = user?.primaryEmailAddress.emailAddress;
-        
-        const response = await axios.post('http://localhost:5000/addEmail/authenticate', { email, item, isSubmitted, points, count });
-        if (response.status === 200) {
-            console.log('Data goes to Facility from frontend');
-            setCreditSuccess(true);
-  
-            setTimeout(() => {
-              setCreditSuccess(false);
-              creditIsOpen(true);
-              console.log("Credit testing")
-            },0); // Auto-hide the success message after 3 seconds
-          } 
+        if(points==0){
+          openPopUp();
+        }else{
+          const response = await axios.post('http://localhost:5000/addEmail/authenticate', { email, item, isSubmitted, points, count });
+          if (response.status === 200) {
+              console.log('Data goes to Facility from frontend');
+              setCreditSuccess(true);
+    
+              setTimeout(() => {
+                setCreditSuccess(false);
+                creditIsOpen(true);
+                console.log("Credit testing")
+              },0); // Auto-hide the success message after 3 seconds
+            } 
+        }
       }
     } catch (error) {
       // Handle any errors, e.g., show an error message
@@ -334,6 +331,13 @@ function Credit() {
                 </Container>
             </section >
             <Footer />
+
+            {isPopUpOpen && (
+              <div className="no-data-popup">
+                <p>Please Enter Number of Items</p>
+                <button onClick={closePopUp}>Close</button>
+              </div>
+            )}
     </div>
   )
 }
