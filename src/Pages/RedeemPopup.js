@@ -1,28 +1,31 @@
 import React, { useState } from 'react';
 import '../App.css';
 import img1 from "../assets/About_Comp/Reward.png";
+import axios from 'axios';
+import { useUser } from "@clerk/clerk-react";
+
 
 const RedeemPopup = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const { user } = useUser();
 
-  const handleClose = () => {
+
+  const handleClose = async() => {
     setIsOpen(false);
+    try {
+      await axios.post('http://localhost:5000/addEmail/send-email', {
+        to: user?.primaryEmailAddress.emailAddress, // Replace with the recipient email
+        subject: 'Successfully redemption of prize',
+        body: 'You have successfully redeemed your points to order the prize. Your order has been created successfully, and it will be delivered in 7 days. Thanks for shopping!',
+      });
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
     window.location.reload(); // Refresh the page
   };
 
   return (
     isOpen && (
-      // <div className="popup-overlay">
-      //   <div className="popup-content">
-      //     <div className="popup-content-inner">
-      //       <img src={img1} alt="Redeemed" className='popup'/>
-      //       <span className='popuptext'>
-      //           <b>Points Redeemed Sucessfully </b>   
-      //       </span>
-      //     </div>
-      //     <button onClick={handleClose}>X</button>
-      //   </div>
-      // </div>
       <div className="no-data-popup">
         <img src={img1} style={{ width: '50px' }} />
         <p>Points Reedemed Sucessfully</p>

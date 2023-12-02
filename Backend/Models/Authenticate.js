@@ -4,7 +4,6 @@ const authenticateSchema = new mongoose.Schema({
     email: String,
     item: String,
     isSubmitted: Boolean,
-    //changing 
     points:Number,
     count:Number
 });

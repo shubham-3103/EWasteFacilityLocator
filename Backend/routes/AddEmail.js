@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../Models/Users')
 const Authenticate = require('../Models/Authenticate')
+const nodemailer = require('nodemailer');
 
 router.post('/', async (req, res) => {
   try {
@@ -190,6 +191,33 @@ router.get('/:email', async (req, res) => {
         console.log('Error:', error); // Add this for debugging
         res.status(500).send({ message: error.message });
     }
+});
+router.post('/send-email', async (req, res) => {
+  const { to, subject, body } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_API_USER, // Your Gmail email address
+      pass: process.env.GMAIL_API_KEY, // Your Gmail password or an app-specific password
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.GMAIL_API_USER, // Sender address
+    to, 
+    subject,
+    text: body,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+    res.status(200).json({ message: 'Email sent successfully' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 

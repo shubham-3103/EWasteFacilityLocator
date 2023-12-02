@@ -36,6 +36,8 @@ function Credit() {
   const [creditOpen, creditIsOpen] = useState(false);
   const isSubmitted = useState(false);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+  const MAX_ITEMS_LIMIT = 500;
+
 
   const openPopUp = () => {
     setIsPopUpOpen(true);
@@ -44,6 +46,7 @@ function Credit() {
   const closePopUp = () => {
     setIsPopUpOpen(false);
   };
+
   
   useEffect(() => {
     if (user) {
@@ -69,16 +72,29 @@ function Credit() {
 
   const calculatePoints = () => {
     if (size === "Small Electronics") {
+      if (count > MAX_ITEMS_LIMIT) {
+        alert(`The maximum limit for the number of items is ${MAX_ITEMS_LIMIT}. Please enter a value less than or equal to the limit.`);
+        return;
+      }
       setPoints(1 * count);
       setWeight(count);
     } else if (size === "Medium Electronics") {
+      if (count > MAX_ITEMS_LIMIT) {
+        alert(`The maximum limit for the number of items is ${MAX_ITEMS_LIMIT}. Please enter a value less than or equal to the limit.`);
+        return;
+      }
       setPoints(2 * count);
       setWeight(count);
     } else if (size === "Large Electronics") {
+      if (count > MAX_ITEMS_LIMIT) {
+        alert(`The maximum limit for the number of items is ${MAX_ITEMS_LIMIT}. Please enter a value less than or equal to the limit.`);
+        return;
+      }
       setPoints(3 * count);
       setWeight(count);
     }
-  }
+  };
+
 
   const handleSubmit = async () => {
     try {
@@ -110,22 +126,39 @@ function Credit() {
       if (user) {
         const email = user?.primaryEmailAddress.emailAddress;
         // Send the email and points to your backend
-        axios.post('http://localhost:5000/addEmail/reducePoints', { email, points: redeemPoints })
-          .then(response => {
-            // Handle the successful response
-            console.log('Points updated successfully', response);
-  
-            setRedeemSuccess(true);
-  
-            setTimeout(() => {
-              setRedeemSuccess(false);
-              setIsOpen(true);
-              console.log("timeout testing")
-            },0); // Auto-hide the success message after 3 seconds
-          })
-          .catch(error => {
-            // Handle any errors
-            console.error('Error updating points:', error);
+        axios
+        .get(`http://localhost:5000/addEmail/${email}`, {
+          params: {
+            email: user.email,
+          },
+        })
+        .then((response) => {
+          if(response.data.points<redeemPoints){
+            alert("Total Points is less than the item points");
+            window.location.reload(); // Refresh the page
+          }else{
+            axios.post('http://localhost:5000/addEmail/reducePoints', { email, points: redeemPoints })
+            .then(response => {
+              // Handle the successful response
+              console.log('Points updated successfully', response);
+    
+              setRedeemSuccess(true);
+    
+              setTimeout(() => {
+                setRedeemSuccess(false);
+                setIsOpen(true);
+                console.log("timeout testing")
+              },0); // Auto-hide the success message after 3 seconds
+            })
+            .catch(error => {
+              // Handle any errors
+              console.error('Error updating points:', error);
+            });
+          }
+        })
+          .catch((error) => {
+            // Handle any errors in adding points
+            console.error(error);
           });
       }
     } catch (error) {
@@ -141,7 +174,6 @@ function Credit() {
   return (
     <div>
       <Navbar />
-      
       {isOpen && <RedeemPopup />}
       {creditOpen && <CreditPopup />}
       <section className="text-gray-600 body-font relative">
