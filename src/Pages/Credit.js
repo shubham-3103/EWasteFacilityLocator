@@ -10,7 +10,7 @@ import img1 from "../assets/rewards/1.jpg";
 import img2 from "../assets/rewards/2.jpg";
 import img3 from "../assets/rewards/3.jpg";
 import img4 from "../assets/rewards/4.jpg";
-import img5 from "../assets/rewards/5.jpg";
+import img5 from "../assets/rewards/11.jpg";
 import img6 from "../assets/rewards/6.jpg";
 import img7 from "../assets/rewards/7.jpg";
 import img8 from "../assets/rewards/8.jpg";
@@ -246,11 +246,6 @@ function Credit() {
                                 </div>
                             </div>
                     <div className="d-flex justify-content-center align-items-center w-100">
-                      {/* <div className="d-flex flex-wrap"> */}
-                        {/* <div className="mb-3">
-                          <label htmlFor="name" className="form-label">Enter Coupon Code to verify.</label>
-                          <input type="text" placeholder="xx-xx" id="name" name="name" className="form-control" />
-                        </div> */}
                         <div className="mt-3">
                             <button className="button-27" onClick={handleSubmit}>Submit</button>
                         </div>
@@ -317,7 +312,7 @@ function Credit() {
                               </div>
                               <div className="mt-4">
                                   <div className="flex flex-row justify-between">
-                                      <h2 className="text-gray-900 title-font text-lg font-medium">Metal Badge</h2>
+                                      <h2 className="text-gray-900 title-font text-lg font-medium">Coffee Mug</h2>
                                       <h3 className="text-gray-500 text-xs tracking-widest title-font">5 Point</h3>
                                   </div>
                                   <Button variant="success" className="mt-2 flex justify-center" onClick={() => handleRedeem(3)}>Redeem</Button>
