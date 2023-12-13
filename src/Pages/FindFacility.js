@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import '../App.css'
 
 function FindFacility() {
   const [locations, setLocations] = useState([]);
@@ -76,7 +77,7 @@ function FindFacility() {
       <Navbar />
       <div id='map' style={{ width: '100%', height: '600px' }}></div>
       {selectedLocation && (
-        <button onClick={handleGetDirections} style={{ marginTop: '10px' }}>
+        <button className='button-28' onClick={handleGetDirections} style={{ marginTop: '10px' }}>
           Get Directions
         </button>
       )}
